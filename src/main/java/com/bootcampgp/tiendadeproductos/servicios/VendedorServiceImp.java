@@ -27,6 +27,7 @@ public class VendedorServiceImp implements VendedorService {
                     throw new ExisteException("Ya existe vendedor con id " + vendedor.getId());
                 }
             }
+            vendedor.setComisionesVentas(0.0);
             vendedor.setSueldoTotal(vendedor.getSueldoBase() + vendedor.getComisionesVentas());
             return this.repo.save(vendedor);
         } else {

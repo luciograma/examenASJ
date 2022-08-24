@@ -5,12 +5,10 @@ import com.bootcampgp.tiendadeproductos.entidades.Vendedor;
 import com.bootcampgp.tiendadeproductos.entidades.Venta;
 import com.bootcampgp.tiendadeproductos.excepciones.ExisteException;
 import com.bootcampgp.tiendadeproductos.excepciones.NoExisteException;
-import com.bootcampgp.tiendadeproductos.repositorios.VendedorRepository;
 import com.bootcampgp.tiendadeproductos.repositorios.VentaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -63,15 +61,17 @@ public class VentaServiceImp implements VentaService {
         Producto producto = productoOp.get();
         venta.setTotal(producto.getPrecio());
 
-        //Persisto venta
-        Venta resultado = this.repo.save(venta);
 
-        //Actualizo comisiones y sueldo del vendedor
+        //Valido vendedor
         Optional<Vendedor> vendedorOp = this.vendedorService.buscarPorId(venta.getVendedor().getId());
         if(!vendedorOp.isPresent()){
             throw new NoExisteException("El vendedor no existe");
         }
 
+        //Persisto venta
+        Venta resultado = this.repo.save(venta);
+
+//        Actualizo comisiones y sueldo del vendedor
         Double comisionVentaActualizada = this.porcentajeComision(venta);
 
         Vendedor vendedor = vendedorOp.get();

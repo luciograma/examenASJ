@@ -19,15 +19,6 @@ public class Vendedor {
     private Long id;
 
     private String nombreApellido;
-
-//    @Embedded
-//    @AttributeOverrides({
-//            @AttributeOverride(name="sueldoTotal", column = @Column(name = "sueldo_total")),
-//            @AttributeOverride(name="sueldoBase", column = @Column(name = "sueldo_base")),
-//            @AttributeOverride(name="comisionesVentas", column = @Column(name = "comisiones_ventas"))
-//    })
-//    private Sueldo sueldo;
-
     private Double sueldoBase;
     private Double comisionesVentas;
     private Double sueldoTotal;

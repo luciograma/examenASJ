@@ -1,6 +1,5 @@
 package com.bootcampgp.tiendadeproductos.dto;
 
-import com.bootcampgp.tiendadeproductos.entidades.Sueldo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
