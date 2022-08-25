@@ -25,8 +25,6 @@ public class VentaServiceImp implements VentaService {
     @Autowired
     private ProductoService productoService;
 
-    //TODO BORRAR LO QUE NO SE USE
-
     @Override
     public Iterable<Venta> listarVentas() {
         return this.repo.findAll();
@@ -55,28 +53,30 @@ public class VentaServiceImp implements VentaService {
 
         //Seteo el total
         Optional<Producto> productoOp = this.productoService.buscarPorId(venta.getProducto().getId());
-        if(!productoOp.isPresent()){
+        if (!productoOp.isPresent()) {
             throw new NoExisteException("El producto no existe");
         }
         Producto producto = productoOp.get();
         venta.setTotal(producto.getPrecio());
-
+        venta.setProducto(producto);
 
         //Valido vendedor
         Optional<Vendedor> vendedorOp = this.vendedorService.buscarPorId(venta.getVendedor().getId());
-        if(!vendedorOp.isPresent()){
+        if (!vendedorOp.isPresent()) {
             throw new NoExisteException("El vendedor no existe");
         }
+        Vendedor vendedor = vendedorOp.get();
 
+        venta.setVendedor(vendedor);
         //Persisto venta
+        System.out.println(venta);
         Venta resultado = this.repo.save(venta);
 
-//        Actualizo comisiones y sueldo del vendedor
+        //Actualizo comisiones y sueldo del vendedor
         Double comisionVentaActualizada = this.porcentajeComision(venta);
 
-        Vendedor vendedor = vendedorOp.get();
         vendedor.setComisionesVentas(comisionVentaActualizada);
-        vendedor.setSueldoTotal(vendedor.getSueldoBase()+vendedor.getComisionesVentas());
+        vendedor.setSueldoTotal(vendedor.getSueldoBase() + vendedor.getComisionesVentas());
 
         //Persisto cambios en vendedor
         this.vendedorService.actualizarVendedor(vendedor.getId(), vendedor);

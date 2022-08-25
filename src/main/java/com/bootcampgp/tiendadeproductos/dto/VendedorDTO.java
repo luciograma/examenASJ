@@ -9,11 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class VendedorDTO {
 
-    private Long id;
     private String nombreApellido;
     private Double sueldoBase;
     private Double comisionesVentas;
-    private Double sueldoTotal;
-
 
 }

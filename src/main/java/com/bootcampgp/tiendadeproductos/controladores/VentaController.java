@@ -1,6 +1,8 @@
 package com.bootcampgp.tiendadeproductos.controladores;
 
 import com.bootcampgp.tiendadeproductos.dto.VentaDTO;
+import com.bootcampgp.tiendadeproductos.entidades.Producto;
+import com.bootcampgp.tiendadeproductos.entidades.Vendedor;
 import com.bootcampgp.tiendadeproductos.entidades.Venta;
 import com.bootcampgp.tiendadeproductos.excepciones.ExisteException;
 import com.bootcampgp.tiendadeproductos.excepciones.NoExisteException;
@@ -41,13 +43,12 @@ public class VentaController {
     @PostMapping
     public ResponseEntity altaVenta(@RequestBody VentaDTO ventaDTO) {
         try {
+            System.out.println(ventaDTO);
             ObjectMapper om = new ObjectMapper();
             Venta venta = om.convertValue(ventaDTO, Venta.class);
             Venta ventaEnDB = this.service.altaVenta(venta);
-            VentaDTO vendedorPersistido = om.convertValue(ventaEnDB, VentaDTO.class);
-            return ResponseEntity.ok(vendedorPersistido);
+            return ResponseEntity.ok(ventaEnDB);
         } catch (ExisteException e) {
-            //TODO agregar logger a todas las catch
             return ResponseEntity.badRequest().body("Detalle: " + e.getMessage());
         } catch (NoExisteException e) {
             return ResponseEntity.notFound().build();

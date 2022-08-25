@@ -45,8 +45,8 @@ public class ProductoServiceImp implements ProductoService {
 
     @Override
     public Optional<Producto> buscarPorId(Long id) throws NoExisteException {
-        if(!this.repo.findById(id).isPresent()){
-            throw new NoExisteException("No existe producto con id ["+id+"]");
+        if (!this.repo.findById(id).isPresent()) {
+            throw new NoExisteException("No existe producto con id [" + id + "]");
         } else {
             return this.repo.findById(id);
         }
